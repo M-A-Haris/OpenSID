@@ -63,91 +63,18 @@
 		return $data;
 	}
 
-	private function jml_semua()
-	{
-		// Siapkan jumlah
-		$sql3 = "SELECT ";
-		$sql3 .= $this->get_jumlah_sql(false, true);
-		$sql3 .= $this->get_laki_sql(false, true);
-		$sql3 .= $this->get_perempuan_sql(false);
-
-		$query3 = $this->db->query($sql3);
-		$semua = $query3->row_array();
-		$semua['no'] = "";
-		$semua['id'] = "";
-		$semua['nama'] = "TOTAL";
-		$semua['persen'] = "100%";
-
-		$semua['persen1'] = $semua['laki']/$semua['jumlah']*100;
-		$semua['persen1'] = number_format((float)$bel['persen1'], 2, '.', '');
-		$semua['persen1'] = $semua['persen1']."%";
-
- 		$semua['persen2'] = $semua['perempuan']/$semua['jumlah']*100;
-		$semua['persen2'] = number_format((float)$bel['persen2'], 2, '.', '');
-		$semua['persen2'] = $semua['persen2']."%";
-		return $semua;
-	}
-
-	private function hitung_total(&$data)
-	{
-		$total['jumlah'] = 0;
-		$total['laki'] = 0;
-		$total['perempuan'] = 0;
-		for ($i=0; $i<count($data); $i++)
-		{
-			$data[$i]['no'] = $i + 1;
-			$total['jumlah'] += $data[$i]['jumlah'];
-			$total['laki'] += $data[$i]['laki'];
-			$total['perempuan'] += $data[$i]['perempuan'];
-		}
-		return $total;
-	}
-
 	public function list_data($o)
 	{
 		$data = $this->jml_per_kategori($o);
-		$semua = $this->jml_semua();
+
+		$semua = $this->data_jml_semua_penduduk();
+		$semua = $this->persentase_semua($semua);
+
 		$total = $this->hitung_total($data);
+		$data[] = $this->baris_jumlah($total, 'PENERIMA');
+		$data[] = $this->baris_belum($semua, $total, 'BUKAN PENERIMA');
+		$this->hitung_persentase($data, $semua);
 
-		// Isi Total
-		$baris_jumlah = array(
-			'no' => "",
-			'id' => JUMLAH,
-			'nama' => "PENERIMA",
-			'jumlah' => $total['jumlah'],
-			'perempuan' => $total['perempuan'],
-			'laki' => $total['laki']
-		);
-		$data[] = $baris_jumlah;
-
-		// Isi data jml belum mengisi
-		$baris_belum = array(
-			'no' => "",
-			'id' => BELUM_MENGISI,
-			'nama' => "BUKAN PENERIMA",
-			'jumlah' => $semua['jumlah'] - $total['jumlah'],
-			'perempuan' => $semua['perempuan'] - $total['perempuan'],
-			'laki' => $semua['laki'] - $total['laki']
-		);
-		$data[] = $baris_belum;
-
-		// Hitung semua presentase
-		for ($i=0; $i<count($data); $i++)
-		{
-			$data[$i]['persen'] = $data[$i]['jumlah']/$semua['jumlah']*100;
-			$data[$i]['persen'] = number_format((float)$data[$i]['persen'], 2, '.', '');
-			$data[$i]['persen'] = $data[$i]['persen']."%";
-
-			$data[$i]['persen1'] = $data[$i]['laki']/$semua['jumlah']*100;
-			$data[$i]['persen1'] = number_format((float)$data[$i]['persen1'], 2, '.', '');
-			$data[$i]['persen1'] = $data[$i]['persen1']."%";
-
-			$data[$i]['persen2'] = $data[$i]['perempuan']/$semua['jumlah']*100;
-			$data[$i]['persen2'] = number_format((float)$data[$i]['persen2'], 2, '.', '');
-			$data[$i]['persen2'] = $data[$i]['persen2']."%";
-		}
-
-		$data['total'] = $semua;
 		return $data;
 	}
 
