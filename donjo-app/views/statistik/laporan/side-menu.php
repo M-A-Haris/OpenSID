@@ -25,7 +25,6 @@
 			<li class="<?php ($lap==18) and print('active') ?>"><a href="<?=site_url('statistik/clear/18')?>">Kepemilikan KTP</a></li>
 			<li class="<?php ($lap==19) and print('active') ?>"><a href="<?=site_url('statistik/clear/19')?>">Jenis Asuransi</a></li>
 			<li class="<?php ($lap=='covid') and print('active') ?>"><a href="<?=site_url('statistik/clear/covid')?>">Status Covid</a></li>
-			<li class="<?php ($lap=='bantuan') and print('active') ?>"><a href="<?=site_url('statistik/clear/bantuan')?>">Penerima Bantuan</a></li>
 		</ul>
 	</div>
 </div>
@@ -56,6 +55,8 @@
           <a href="<?= site_url()?>statistik/index/<?= $bantuan['lap']?>"><?= $bantuan['nama']." (".$bantuan['lap'].")"?></a>
         </li>
       <?php endforeach; ?>
+			<li class="<?php ($lap=='bantuan') and print('active') ?>"><a href="<?=site_url('statistik/clear/bantuan_penduduk')?>">Penerima Bantuan (Penduduk)</a></li>
+			<li <?php if ($lap=='bantuan_keluarga'): ?>class="active"<?php endif; ?>><a href="<?=site_url('statistik/index/bantuan_keluarga')?>">Penerima Bantuan (Keluarga)</a></li>
 		</ul>
 	</div>
 </div>

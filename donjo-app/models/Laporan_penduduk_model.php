@@ -213,7 +213,7 @@
 			"statistik/5"  => "Warga Negara",
 			"statistik/19" => "Asuransi",
 			"statistik/covid" => "Status Covid",
-			"statistik/bantuan" => "Penerima Bantuan"
+			"statistik/bantuan_penduduk" => "Penerima Bantuan (Penduduk)"
 		);
 		return $statistik;
 	}
@@ -221,7 +221,8 @@
 	public function link_statistik_keluarga()
 	{
 		$statistik = array(
-			"statistik/kelas_sosial" => "Kelas Sosial"
+			"statistik/kelas_sosial" => "Kelas Sosial",
+			"statistik/bantuan_keluarga" => "Penerima Bantuan (keluarga)"
 		);
 		return $statistik;
 	}
@@ -273,7 +274,8 @@
 			case "covid": return "Status Covid"; break;
 			case "21": return "Klasifikasi Sosial"; break;
 			case "24": return "Penerima BOS"; break;
-			case "bantuan": return "Penerima Bantuan"; break;
+			case "bantuan_penduduk": return "Penerima Bantuan (Penduduk)"; break;
+			case "bantuan_keluarga": return "Penerima Bantuan (Keluarga)"; break;
 			default: return NULL;
 		}
 	}
@@ -637,10 +639,16 @@
 	public function list_data($lap=0, $o=0)
 	{
 		// Penerima program bantuan secara menyeluruh
-		if ($lap == 'bantuan')
+		if ($lap == 'bantuan_penduduk')
 		{
 			$this->load->model('statistik_penduduk_model');
 			return $this->statistik_penduduk_model->list_data($o);
+		}
+
+		if ($lap == 'bantuan_keluarga')
+		{
+			$this->load->model('Statistik_keluarga_model');
+			return $this->Statistik_keluarga_model->list_data($o);
 		}
 
 		// Laporan program bantuan
@@ -692,19 +700,6 @@
 				  ->group_by('u.id');
 				break;
 
-			//penerima_bantuan
-			case 'bantuan': $sql =
-				"SELECT u.*,
-				(SELECT COUNT(kartu_nik) FROM program_peserta WHERE program_id = u.id) AS jumlah,
-				(SELECT COUNT(k.kartu_nik) FROM program_peserta k INNER JOIN tweb_penduduk p ON k.kartu_nik=p.nik WHERE program_id = u.id AND p.sex = 1) AS laki,
-				(SELECT COUNT(k.kartu_nik) FROM program_peserta k INNER JOIN tweb_penduduk p ON k.kartu_nik=p.nik WHERE program_id = u.id AND p.sex = 2) AS perempuan
-				FROM program u";
-				break;
-
-			case in_array($lap, array_keys($statistik_penduduk)):
-				$this->select_jml_penduduk_per_kategori($statistik_penduduk["$lap"]['id_referensi'], $statistik_penduduk["$lap"]['tabel_referensi']);
-				break;
-
 			case "13":
 				$where = "(DATE_FORMAT(FROM_DAYS(TO_DAYS( NOW()) - TO_DAYS(tanggallahir)) , '%Y')+0)>=u.dari AND (DATE_FORMAT(FROM_DAYS( TO_DAYS(NOW()) - TO_DAYS(tanggallahir)) , '%Y')+0) <= u.sampai";
 				$str_jml_penduduk = $this->str_jml_penduduk($where);
@@ -743,7 +738,7 @@
 			$this->db->where("((DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(tanggallahir)), '%Y')+0)>=17 OR (status_kawin IS NOT NULL AND status_kawin <> 1))");
 			$semua = $this->data_jml_semua_penduduk();
 		}
-		elseif (($lap<=20 OR $lap=='covid' OR $lap=='bantuan') AND "$lap" <> 'kelas_sosial')
+		elseif (($lap<=20 OR $lap=='covid') AND ("$lap" <> 'kelas_sosial' OR "$lap" <> 'bantuan_penduduk' OR "$lap" <> 'bantuan_keluarga'))
 		{
 			$semua = $this->data_jml_semua_penduduk();
 		}
