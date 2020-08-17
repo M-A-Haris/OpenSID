@@ -1051,3 +1051,8 @@ function crawler()
 
 	return FALSE;
 }
+
+function pre_print_r($data)
+{
+	print("<pre>".print_r($data, true)."</pre>");
+}

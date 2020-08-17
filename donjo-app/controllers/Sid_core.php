@@ -95,7 +95,7 @@ class Sid_Core extends Admin_Controller {
 	public function cetak()
 	{
 		$data['desa'] = $this->_header;
-		$data['main'] = $this->wilayah_model->list_data(0, 0, 1000);
+		$data['main'] = $this->wilayah_model->list_semua_wilayah();
 		$data['total'] = $this->wilayah_model->total();
 
 		$this->load->view('sid/wilayah/wilayah_print', $data);
@@ -104,7 +104,7 @@ class Sid_Core extends Admin_Controller {
 	public function excel()
 	{
 		$data['desa'] = $this->_header;
-		$data['main'] = $this->wilayah_model->list_data(0, 0, 1000);
+		$data['main'] = $this->wilayah_model->list_semua_wilayah();
 		$data['total'] = $this->wilayah_model->total();
 
 		$this->load->view('sid/wilayah/wilayah_excel', $data);
