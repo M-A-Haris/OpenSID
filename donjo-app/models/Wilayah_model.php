@@ -86,7 +86,7 @@
 	public function list_semua_wilayah()
 	{
 		$this->case_dusun = "w.rt = '0' and w.rw = '0'";
-		$this->case_rw = "w.rw <> '0' and w.rw <> '-'";
+		$this->case_rw = "w.rw <> '0' and w.rw <> '-' and w.rt = '0'";
 		$this->case_rt = "w.rt <> '0' and w.rt <> '-'";
 
 		$this->select_jumlah_rw_rt();

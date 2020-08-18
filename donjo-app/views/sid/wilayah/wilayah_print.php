@@ -48,8 +48,8 @@
 						<?php foreach ($main as $indeks => $data): ?>
 							<tr>
 								<td align="center"><?= $indeks + 1?></td>
-								<td><?= strtoupper($data['dusun'])?></td>
-								<td><?= $data['rw']?></td>
+								<td><?= ($main[$indeks - 1]['dusun'] == $data['dusun']) ? '' : strtoupper($data['dusun'])?></td>
+								<td><?= ($main[$indeks - 1]['rw'] == $data['rw']) ? '' : $data['rw']?></td>
 								<td><?= $data['rt']?></td>
 								<td><?= $data['nik_kepala']?></td>
 								<td><?= $data['nama_kepala']?></td>
