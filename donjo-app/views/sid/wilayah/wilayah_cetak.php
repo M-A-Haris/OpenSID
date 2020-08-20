@@ -73,6 +73,7 @@
 						</tr>
 					</tbody>
 				</table>
+				<?php include("donjo-app/views/global/blok_ttd_pamong.php"); ?>
 			</div>
 			<label>Tanggal cetak : &nbsp; </label><?= tgl_indo(date("Y m d"))?>
 		</div>
