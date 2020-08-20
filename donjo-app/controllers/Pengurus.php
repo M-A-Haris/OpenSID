@@ -9,7 +9,7 @@ class Pengurus extends Admin_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model(['header_model', 'pamong_model', 'penduduk_model', 'config_model', 'referensi_model']);
+		$this->load->model(['header_model', 'pamong_model', 'penduduk_model', 'config_model', 'referensi_model', 'wilayah_model']);
 		$this->modul_ini = 200;
 		$this->sub_modul_ini = 18;
 		$this->_set_page = ['20', '50', '100'];
@@ -164,4 +164,13 @@ class Pengurus extends Admin_Controller {
 		$this->load->view('home/'.$aksi, $data);
 	}
 
+	public function bagan()
+	{
+		$data['desa'] = $this->config_model->get_data();
+		$data['bagan'] = $this->pamong_model->list_bagan();
+		$this->load->view('header', $this->_header);
+		$this->load->view('nav');
+		$this->load->view('home/bagan', $data);
+		$this->load->view('footer');
+	}
 }

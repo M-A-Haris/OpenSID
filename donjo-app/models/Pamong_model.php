@@ -184,19 +184,23 @@
 
 	private function siapkan_data(&$data)
 	{
-		$data['id_pend'] = $this->input->post('id_pend');
+		$post = $this->input->post();
+		$data['id_pend'] = $post['id_pend'];
 		$this->data_pamong_asal($data);
-		$data['pamong_nip'] = strip_tags($this->input->post('pamong_nip'));
-		$data['pamong_niap'] = strip_tags($this->input->post('pamong_niap'));
-		$data['jabatan'] = strip_tags($this->input->post('jabatan'));
-		$data['pamong_pangkat'] = strip_tags($this->input->post('pamong_pangkat'));
-		$data['pamong_status'] = $this->input->post('pamong_status');
-		$data['pamong_nosk'] = strip_tags($this->input->post('pamong_nosk'));
-		$data['pamong_tglsk'] = !empty($this->input->post('pamong_tglsk')) ? tgl_indo_in($this->input->post('pamong_tglsk')) : NULL;
-		$data['pamong_tanggallahir'] = !empty($this->input->post('pamong_tanggallahir')) ? tgl_indo_in($this->input->post('pamong_tanggallahir')) : NULL;
-		$data['pamong_nohenti'] = !empty($this->input->post('pamong_nohenti')) ? strip_tags($this->input->post('pamong_nohenti')) : NULL;
-		$data['pamong_tglhenti'] = !empty($this->input->post('pamong_tglhenti')) ? tgl_indo_in($this->input->post('pamong_tglhenti')) : NULL;
-		$data['pamong_masajab'] = strip_tags($this->input->post('pamong_masajab')) ?: NULL;
+		$data['pamong_nip'] = strip_tags($post['pamong_nip']);
+		$data['pamong_niap'] = strip_tags($post['pamong_niap']);
+		$data['jabatan'] = strip_tags($post['jabatan']);
+		$data['pamong_pangkat'] = strip_tags($post['pamong_pangkat']);
+		$data['pamong_status'] = $post['pamong_status'];
+		$data['pamong_nosk'] = strip_tags($post['pamong_nosk']);
+		$data['pamong_tglsk'] = !empty($post['pamong_tglsk']) ? tgl_indo_in($post['pamong_tglsk']) : NULL;
+		$data['pamong_tanggallahir'] = !empty($post['pamong_tanggallahir']) ? tgl_indo_in($post['pamong_tanggallahir']) : NULL;
+		$data['pamong_nohenti'] = !empty($post['pamong_nohenti']) ? strip_tags($post['pamong_nohenti']) : NULL;
+		$data['pamong_tglhenti'] = !empty($post['pamong_tglhenti']) ? tgl_indo_in($post['pamong_tglhenti']) : NULL;
+		$data['pamong_masajab'] = strip_tags($post['pamong_masajab']) ?: NULL;
+		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']);
+		$data['bagan_offset'] = bilangan($post['bagan_offset']) ?: NULL;
+		$data['bagan_layout'] = $post['bagan_layout'];
 		return $data;
 	}
 
@@ -351,6 +355,29 @@
 		$this->db
 			->where('pamong_id', $id)
 			->update('tweb_desa_pamong', ['pamong_status' => $val]);
+	}
+
+	public function list_bagan()
+	{
+		// atasan => bawahan
+		$data['struktur'] = [
+      ['14' => '20'],
+      ['14' => '26'],
+      ['14' => '27'],
+      ['14' => '28'],
+      ['20' => '22'],
+      ['20' => '24']
+    ];
+
+    $data['nodes'] = $this->db
+    	->select('p.pamong_id, p.jabatan, p.foto, p.bagan_tingkat, p.bagan_offset, p.bagan_layout')
+    	->select('(CASE WHEN id_pend IS NOT NULL THEN ph.nama ELSE p.pamong_nama END) as nama')
+    	->from('tweb_desa_pamong p')
+    	->join('penduduk_hidup ph', 'ph.id = p.id_pend', 'left')
+    	->where('pamong_status', 1)
+    	->get()->result_array();
+
+    return $data;
 	}
 
 }

@@ -67,6 +67,29 @@ class Migrasi_2008_ke_2009 extends CI_model {
 
 		// Hapus view lama yg tdk digunakan lagi
 		$this->db->query("DROP VIEW IF EXISTS data_surat");
+
+		// Struktur pemerintahan desa
+		if (!$this->db->field_exists('atasan', 'tweb_desa_pamong'))
+		{
+  		$fields['atasan'] = [
+	        	'type' => 'INT',
+	        	'constraint' => 11,
+	        ];
+  		$fields['bagan_tingkat'] = array(
+	        	'type' => 'TINYINT',
+	        	'constraint' => 2,
+	        );
+  		$fields['bagan_offset'] = array(
+	        	'type' => 'INT',
+	        	'constraint' => 3,
+	        );
+  		$fields['bagan_layout'] = array(
+	        	'type' => 'VARCHAR',
+	        	'constraint' => 20,
+	        );
+			$this->dbforge->add_column('tweb_desa_pamong', $fields);
+  	}
+
 	}
 
 }

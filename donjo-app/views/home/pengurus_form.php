@@ -1,5 +1,9 @@
 <style type="text/css">
 	.kiri { padding-left: 0px; }
+	.bagan {
+		font-weight: bold;
+		color: red;
+	}
 </style>
 <div class="content-wrapper">
 	<section class="content-header">
@@ -203,6 +207,27 @@
 								<label class="col-sm-4 control-label" for="jabatan">Jabatan</label>
 								<div class="col-sm-7">
 									<input id="jabatan" name="jabatan" class="form-control input-sm required" type="text" placeholder="Jabatan" value="<?= $pamong['jabatan']?>" ></input>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Tingkat</label>
+								<div class="col-sm-7">
+									<input name="bagan_tingkat" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat ditampilkan di bagan organisasi" value="<?= $pamong['bagan_tingkat']?>" ></input>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Offset</label>
+								<div class="col-sm-7">
+									<input name="bagan_offset" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat ditampilkan di bagan organisasi" value="<?= $pamong['bagan_offset']?>" ></input>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Layout</label>
+								<div class="col-sm-7">
+									<select class="form-control input-sm" name="bagan_layout">
+										<option value="">Tidak Ada Layout</option>
+										<option value="hanging" <?php selected($pamong['bagan_layout'], 'hanging'); ?>>Hanging</option>
+									</select>
 								</div>
 							</div>
 							<div class="form-group">
