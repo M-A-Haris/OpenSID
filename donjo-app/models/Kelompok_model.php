@@ -203,15 +203,6 @@ class Kelompok_model extends MY_Model {
 		status_sukses($outp, $gagal_saja=true); //Tampilkan Pesan
 	}
 
-	public function delete_a($id='', $semua=false)
-	{
-		if (!$semua) $this->session->success = 1;
-
-		$outp = $this->db->where('id', $id)->delete('kelompok_anggota');
-
-		status_sukses($outp, $gagal_saja=true); //Tampilkan Pesan
-	}
-
 	public function delete_all()
 	{
 		$this->session->success = 1;
@@ -220,6 +211,26 @@ class Kelompok_model extends MY_Model {
 		foreach ($id_cb as $id)
 		{
 			$this->delete($id, $semua=true);
+		}
+	}
+
+	public function delete_anggota($id='', $semua=false)
+	{
+		if (!$semua) $this->session->success = 1;
+
+		$outp = $this->db->where('id', $id)->delete('kelompok_anggota');
+
+		status_sukses($outp, $gagal_saja=true); //Tampilkan Pesan
+	}
+
+	public function delete_anggota_all()
+	{
+		$this->session->success = 1;
+
+		$id_cb = $_POST['id_cb'];
+		foreach ($id_cb as $id)
+		{
+			$this->delete_anggota($id, $semua=true);
 		}
 	}
 
@@ -234,13 +245,16 @@ class Kelompok_model extends MY_Model {
 	public function get_ketua_kelompok($id)
 	{
 		$this->load->model('penduduk_model');
-		$sql = "SELECT u.id,u.nik,u.nama,k.id as id_kelompok,k.nama as nama_kelompok,u.tempatlahir,u.tanggallahir,(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(`tanggallahir`)), '%Y')+0 FROM tweb_penduduk WHERE id = u.id) AS umur,d.nama as pendidikan,f.nama as warganegara,a.nama as agama,
-			wil.rt, wil.rw, wil.dusun
+		$sql = "SELECT u.id, u.nik, u.nama, k.id as id_kelompok, k.nama as nama_kelompok, u.tempatlahir, u.tanggallahir, s.nama as sex,
+				(SELECT DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW())-TO_DAYS(`tanggallahir`)), '%Y')+0 FROM tweb_penduduk WHERE id = u.id) AS umur,
+				d.nama as pendidikan, f.nama as warganegara, a.nama as agama,
+				wil.rt, wil.rw, wil.dusun
 			FROM kelompok k
-			LEFT JOIN tweb_penduduk u ON u.id= k.id_ketua
+			LEFT JOIN tweb_penduduk u ON u.id = k.id_ketua
 			LEFT JOIN tweb_penduduk_pendidikan_kk d ON u.pendidikan_kk_id = d.id
 			LEFT JOIN tweb_penduduk_warganegara f ON u.warganegara_id = f.id
 			LEFT JOIN tweb_penduduk_agama a ON u.agama_id = a.id
+			LEFT JOIN tweb_penduduk_sex s ON s.id = u.sex
 			LEFT JOIN tweb_wil_clusterdesa wil ON wil.id = u.id_cluster
 			WHERE k.id = $id LIMIT 1";
 		$query = $this->db->query($sql);
@@ -280,7 +294,7 @@ class Kelompok_model extends MY_Model {
 		if ($ex_kelompok)
 		{
 			$anggota = $this->in_list_anggota($ex_kelompok);
-			$this->db->where("p.id not in ($anggota)");
+			if ($anggota) $this->db->where("p.id not in ($anggota)");
 		}
 		$sebutan_dusun = ucwords($this->setting->sebutan_dusun);
 		$this->db
