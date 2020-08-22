@@ -105,7 +105,6 @@ class Migrasi_2008_ke_2009 extends CI_model {
 				'CONSTRAINT `kelompok_anggota_fk` FOREIGN KEY (`id_kelompok`) REFERENCES `kelompok` (`id`) ON DELETE CASCADE ON UPDATE CASCADE'
 			]);
 		}
->>>>>>> master
 	}
 
 }
