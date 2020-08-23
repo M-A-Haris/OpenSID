@@ -4,7 +4,6 @@
     min-width: 300px;
     overflow: scroll !important;
 }
-}
 </style>
 
 <div class="content-wrapper">
@@ -35,12 +34,12 @@
 	</section>
 </div>
 
-<!-- <script src="https://code.highcharts.com/highcharts.js"></script> -->
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <!-- <script src="https://code.highcharts.com/stock/highstock.js"></script> -->
 <script src="https://code.highcharts.com/modules/sankey.js"></script>
 <script src="https://code.highcharts.com/modules/organization.js"></script>
-<!-- <script src="https://code.highcharts.com/modules/exporting.js"></script> -->
-<!-- <script src="https://code.highcharts.com/modules/accessibility.js"></script> -->
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 <script type="text/javascript">
 
