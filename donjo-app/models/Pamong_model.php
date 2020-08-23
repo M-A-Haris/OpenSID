@@ -198,10 +198,10 @@
 		$data['pamong_nohenti'] = !empty($post['pamong_nohenti']) ? strip_tags($post['pamong_nohenti']) : NULL;
 		$data['pamong_tglhenti'] = !empty($post['pamong_tglhenti']) ? tgl_indo_in($post['pamong_tglhenti']) : NULL;
 		$data['pamong_masajab'] = strip_tags($post['pamong_masajab']) ?: NULL;
-		$data['atasan'] = bilangan($post['atasan']);
-		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']);
+		$data['atasan'] = bilangan($post['atasan']) ?: NULL;
+		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']) ?: NULL;
 		$data['bagan_offset'] = bilangan($post['bagan_offset']) ?: NULL;
-		$data['bagan_layout'] = $post['bagan_layout'];
+		$data['bagan_layout'] = htmlentities($post['bagan_layout']);
 		return $data;
 	}
 
