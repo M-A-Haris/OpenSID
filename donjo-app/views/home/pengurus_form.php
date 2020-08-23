@@ -223,13 +223,13 @@
 							<div class="form-group">
 								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Tingkat</label>
 								<div class="col-sm-7">
-									<input name="bagan_tingkat" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat ditampilkan di bagan organisasi" value="<?= $pamong['bagan_tingkat']?>" ></input>
+									<input name="bagan_tingkat" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat di bagan organisasi. Contoh: 2" value="<?= $pamong['bagan_tingkat']?>" ></input>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Offset</label>
 								<div class="col-sm-7">
-									<input name="bagan_offset" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat ditampilkan di bagan organisasi" value="<?= $pamong['bagan_offset']?>" ></input>
+									<input name="bagan_offset" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan persentase geser kiri (-n) atau kanan (+n). Contoh: 75%" value="<?= $pamong['bagan_offset']?>" ></input>
 								</div>
 							</div>
 							<div class="form-group">
