@@ -198,6 +198,7 @@
 		$data['pamong_nohenti'] = !empty($post['pamong_nohenti']) ? strip_tags($post['pamong_nohenti']) : NULL;
 		$data['pamong_tglhenti'] = !empty($post['pamong_tglhenti']) ? tgl_indo_in($post['pamong_tglhenti']) : NULL;
 		$data['pamong_masajab'] = strip_tags($post['pamong_masajab']) ?: NULL;
+		$data['atasan'] = bilangan($post['atasan']);
 		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']);
 		$data['bagan_offset'] = bilangan($post['bagan_offset']) ?: NULL;
 		$data['bagan_layout'] = $post['bagan_layout'];
@@ -359,15 +360,22 @@
 
 	public function list_bagan()
 	{
-		// atasan => bawahan
-		$data['struktur'] = [
-      ['14' => '20'],
-      ['14' => '26'],
-      ['14' => '27'],
-      ['14' => '28'],
-      ['20' => '22'],
-      ['20' => '24']
-    ];
+		// atasan => bawahan. Contoh:
+		// data['struktur'] = [
+    //  ['14' => '20'],
+    //  ['14' => '26'],
+    //  ['20' => '24']
+    // ;
+		$atasan = $this->db
+			->select('atasan, pamong_id')
+			->where('atasan IS NOT NULL')
+    	->where('pamong_status', 1)
+			->get('tweb_desa_pamong')->result_array();
+		$data['struktur'] = [];
+		foreach ($atasan as $pamong)
+		{
+			$data['struktur'][] = [$pamong['atasan'] => $pamong['pamong_id']];
+		}
 
     $data['nodes'] = $this->db
     	->select('p.pamong_id, p.jabatan, p.foto, p.bagan_tingkat, p.bagan_offset, p.bagan_layout')
@@ -377,6 +385,21 @@
     	->where('pamong_status', 1)
     	->get()->result_array();
 
+    return $data;
+	}
+
+	public function list_atasan($ex_id = '')
+	{
+		if ($ex_id) $this->db->where('pamong_id <>', $ex_id);
+		$data = $this->db
+			->select('pamong_id as id, jabatan')
+    	->select('(CASE WHEN id_pend IS NOT NULL THEN ph.nik ELSE p.pamong_nik END) as nik')
+    	->select('(CASE WHEN id_pend IS NOT NULL THEN ph.nama ELSE p.pamong_nama END) as nama')
+    	->from('tweb_desa_pamong p')
+    	->join('penduduk_hidup ph', 'ph.id = p.id_pend', 'left')
+    	->where('pamong_status', 1)
+    	->order_by('nama')
+    	->get()->result_array();
     return $data;
 	}
 

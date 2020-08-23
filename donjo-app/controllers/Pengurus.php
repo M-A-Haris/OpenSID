@@ -65,7 +65,7 @@ class Pengurus extends Admin_Controller {
 			$data['pamong'] = NULL;
 			$data['form_action'] = site_url("pengurus/insert");
 		}
-
+		$data['atasan'] = $this->pamong_model->list_atasan($id);
 		$data['penduduk'] = $this->pamong_model->list_penduduk();
 		$data['pendidikan_kk'] = $this->referensi_model->list_data('tweb_penduduk_pendidikan_kk');
 		$data['agama'] = $this->referensi_model->list_data('tweb_penduduk_agama');

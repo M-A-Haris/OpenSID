@@ -210,6 +210,17 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="col-sm-4 control-label bagan" for="atasan">Atasan</label>
+								<div class="col-sm-7">
+									<select class="form-control select2 input-sm" name="atasan">
+										<option value="">Pilih Atasan</option>
+										<?php foreach ($atasan as $data): ?>
+											<option value="<?= $data['id']?>" <?php selected($pamong['atasan'], $data['id']); ?>><?= $data['nama']?> (<?= $data['jabatan']?>)</option>
+										<?php endforeach;?>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-sm-4 control-label bagan" for="jabatan">Bagan - Tingkat</label>
 								<div class="col-sm-7">
 									<input name="bagan_tingkat" class="form-control input-sm number" type="text" placeholder="Angka menunjukkan tingkat ditampilkan di bagan organisasi" value="<?= $pamong['bagan_tingkat']?>" ></input>

@@ -1,6 +1,8 @@
 
+<link rel="stylesheet" href="<?= base_url()?>assets/css/highcharts.css">
+
 <style type="text/css">
-@import 'https://code.highcharts.com/css/highcharts.css';
+/*@import 'https://code.highcharts.com/css/highcharts.css';*/
 .highcharts-figure, .highcharts-data-table table {
     min-width: 360px;
     max-width: 800px;
@@ -98,7 +100,7 @@ Highcharts.chart('container', {
     },
 
     title: {
-        text: 'Struktur Organisasi'
+        text: 'Struktur Organisasi Pemerintahan <?= ucwords($this->setting->sebutan_desa.' '.$desa['nama_desa'])?>'
     },
 
     accessibility: {
