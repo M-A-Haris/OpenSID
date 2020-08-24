@@ -242,6 +242,17 @@
 								</div>
 							</div>
 							<div class="form-group">
+								<label class="control-label col-sm-4 bagan">Bagan - Warna</label>
+								<div class="col-sm-7">
+									<div class="input-group my-colorpicker2">
+										<input type="text" name="bagan_warna" class="form-control input-sm required" placeholder="#FFFFFF" value="<?=  $line['color']?>">
+										<div class="input-group-addon input-sm">
+											<i></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
 								<label class="col-xs-12 col-sm-4 col-lg-4 control-label" for="status">Status Pegawai Desa</label>
 								<div class="btn-group col-xs-12 col-sm-8" data-toggle="buttons">
 									<label id="sx3" class="btn btn-info btn-flat btn-sm col-xs-6 col-sm-5 col-lg-3 form-check-label <?php if ($pamong['pamong_status'] == '1' OR $pamong['pamong_status'] == NULL): ?>active<?php endif ?>">

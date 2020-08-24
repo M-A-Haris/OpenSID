@@ -74,6 +74,16 @@ class Migrasi_fitur_premium extends CI_model {
 	        );
 			$this->dbforge->add_column('tweb_desa_pamong', $fields);
   	}
+		// Struktur pemerintahan desa
+		if (!$this->db->field_exists('bagan_warna', 'tweb_desa_pamong'))
+		{
+  		$fields['bagan_warna'] = [
+	        	'type' => 'VARCHAR',
+	        	'constraint' => 10,
+	        	'default' => NULL
+	        ];
+			$this->dbforge->add_column('tweb_desa_pamong', $fields);
+  	}
 	}
 
 }

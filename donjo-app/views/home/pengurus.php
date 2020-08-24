@@ -32,9 +32,19 @@
 						<a href="<?= site_url('pengurus/form')?>" class="btn btn-social btn-flat btn-success btn-sm btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Tambah Staf">
 							<i class="fa fa-plus"></i>Tambah Aparat Pemerintahan <?= ucwords($this->setting->sebutan_desa)?>
 						</a>
-						<a href="#confirm-delete" title="Hapus Data" onclick="deleteAllBox('mainform','<?= site_url("pengurus/delete_all")?>')" class="btn btn-social btn-flat btn-danger btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block hapus-terpilih">
-							<i class='fa fa-trash-o'></i> Hapus Data Terpilih
-						</a>
+						<div class="btn-group btn-group-vertical">
+							<a class="btn btn-social btn-flat btn-info btn-sm" data-toggle="dropdown"><i class='fa fa-arrow-circle-down'></i> Aksi Data Terpilih</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="<?= site_url("pengurus/atur_bagan")?>" title="Ubah Data" data-remote="false" data-toggle="modal" data-target="#modal-bagan" data-title="Pengaturan Bagan" class="btn btn-social btn-flat btn-block btn-sm aksi-terpilih" ><i class="fa fa-sitemap"></i> Atur Bagan</a>
+								</li>
+								<?php if ($this->CI->cek_hak_akses('h')): ?>
+									<li>
+										<a href="#confirm-delete" class="btn btn-social btn-flat btn-block btn-sm hapus-terpilih" title="Hapus Data" onclick="deleteAllBox('mainform', '<?=site_url("pengurus/delete_all")?>')"><i class="fa fa-trash-o"></i> Hapus Data Terpilih</a>
+									</li>
+								<?php endif; ?>
+							</ul>
+						</div>
 						<a href="<?= site_url("pengurus/dialog/cetak")?>" class="btn btn-social btn-flat bg-purple btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" data-remote="false" data-toggle="modal" data-target="#modalBox" data-title="Cetak Data"><i class="fa fa-print "></i> Cetak</a>
 						<a href="<?= site_url("pengurus/dialog/unduh")?>" title="Unduh Data" class="btn btn-social btn-flat bg-navy btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" data-remote="false" data-toggle="modal" data-target="#modalBox" data-title="Unduh Data"><i class="fa fa-download"></i> Unduh</a>
 						<a href="<?= site_url("pengurus/bagan")?>" title="Bagan Organisasi" class="btn btn-social btn-flat bg-olive btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"><i class="fa fa-sitemap"></i> Bagan Organisasi</a>
@@ -166,4 +176,39 @@
 		</div>
 	</section>
 </div>
+<!-- Untuk menampilkan modal pengaturan bagan  -->
+<div class="modal fade" id="modal-bagan" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+				<h4 class='modal-title' id='myModalLabel'> Pengaturan Bagan</h4>
+			</div>
+			<div class="fetched-data"></div>
+		</div>
+	</div>
+</div>
+
 <?php $this->load->view('global/confirm_delete');?>
+
+<script type="text/javascript">
+
+$('document').ready(function()
+{
+
+	$('#modal-bagan').on('show.bs.modal', function(e)
+	{
+		var link = $(e.relatedTarget);
+		var title = link.data('title');
+		var id = link.data('id');
+		var modal = $(this);
+		modal.find('.modal-title').text(title)
+		$(this).find('.fetched-data').load(link.attr('href'));
+		setTimeout(function() {
+			// tambahkan csrf token
+			addCsrfField(modal.find("form")[0]);
+		}, 500);
+	});
+
+});
+</script>

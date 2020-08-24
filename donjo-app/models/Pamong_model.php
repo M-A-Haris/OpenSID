@@ -202,6 +202,7 @@
 		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']) ?: NULL;
 		$data['bagan_offset'] = bilangan($post['bagan_offset']) ?: NULL;
 		$data['bagan_layout'] = htmlentities($post['bagan_layout']);
+		$data['bagan_warna'] = $post['bagan_warna'];
 		return $data;
 	}
 
@@ -378,7 +379,7 @@
 		}
 
     $data['nodes'] = $this->db
-    	->select('p.pamong_id, p.jabatan, p.foto, p.bagan_tingkat, p.bagan_offset, p.bagan_layout')
+    	->select('p.pamong_id, p.jabatan, p.foto, p.bagan_tingkat, p.bagan_offset, p.bagan_layout, p.bagan_warna')
     	->select('(CASE WHEN id_pend IS NOT NULL THEN ph.nama ELSE p.pamong_nama END) as nama')
     	->from('tweb_desa_pamong p')
     	->join('penduduk_hidup ph', 'ph.id = p.id_pend', 'left')
@@ -403,5 +404,19 @@
     return $data;
 	}
 
+	public function update_bagan($post)
+	{
+
+// print("<pre>".print_r($post, true)."</pre>"); die();
+
+		$list_id = $post['list_id'];
+		$data['atasan'] = $post['atasan'];
+		$data['bagan_tingkat'] = $post['bagan_tingkat'];
+		$data['bagan_warna'] = $post['bagan_warna'];
+		$this->db
+			->where("pamong_id in ($list_id)")
+			->update('tweb_desa_pamong', array_filter($data));
+// print("<pre>".print_r($this->db->last_query(), true)."</pre>"); die();
+	}
 }
 ?>

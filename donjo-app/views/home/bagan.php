@@ -163,6 +163,9 @@ Highcharts.chart('container', {
         			<?php if (! empty($pamong['bagan_layout'])): ?>
         				layout: '<?= $pamong['bagan_layout'] ?: ''?>',
         			<?php endif; ?>
+                    <?php if (! empty($pamong['bagan_warna'])): ?>
+                        color: '<?= $pamong['bagan_warna'] ?: ''?>',
+                    <?php endif; ?>
         		},
         	<?php endforeach; ?>
         ],

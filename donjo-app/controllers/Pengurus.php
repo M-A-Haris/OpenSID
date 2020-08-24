@@ -173,4 +173,19 @@ class Pengurus extends Admin_Controller {
 		$this->load->view('home/bagan', $data);
 		$this->load->view('footer');
 	}
+
+	public function atur_bagan()
+	{
+		$data['atasan'] = $this->pamong_model->list_atasan();
+		$data['form_action'] = site_url("pengurus/update_bagan");
+		$this->load->view('home/ajax_atur_bagan', $data);
+	}
+
+	public function update_bagan()
+	{
+		$post = $this->input->post();
+		$this->pamong_model->update_bagan($post);
+		redirect('pengurus');
+	}
+
 }
