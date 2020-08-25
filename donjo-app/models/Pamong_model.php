@@ -410,12 +410,15 @@
 // print("<pre>".print_r($post, true)."</pre>"); die();
 
 		$list_id = $post['list_id'];
-		$data['atasan'] = $post['atasan'];
-		$data['bagan_tingkat'] = $post['bagan_tingkat'];
-		$data['bagan_warna'] = $post['bagan_warna'];
+		if ($post['atasan'])
+			$data['atasan'] = ($post['atasan'] <= 0) ? NULL : $post['atasan'];
+		if ($post['bagan_tingkat'])
+			$data['bagan_tingkat'] = ($post['bagan_tingkat'] <= 0) ? NULL : $post['bagan_tingkat'];
+		if ($post['bagan_warna'])
+			$data['bagan_warna'] = ($post['bagan_warna'] == '#000000') ? NULL : $post['bagan_warna'];
 		$this->db
 			->where("pamong_id in ($list_id)")
-			->update('tweb_desa_pamong', array_filter($data));
+			->update('tweb_desa_pamong', $data);
 // print("<pre>".print_r($this->db->last_query(), true)."</pre>"); die();
 	}
 }

@@ -24,7 +24,12 @@
 	<input type="hidden" name="list_id" value="">
 	<div id="atur_bagan" class='modal-body'>
 		<div class="pengurus alert notif-info">
-		  Perubahan pengaturan bagan di form ini akan dilakukan untuk setiap staf yang dipilih pada daftar Pemerintahan Desa.
+		  <p>Perubahan pengaturan bagan di form ini akan dilakukan untuk setiap staf yang dipilih pada daftar Pemerintahan Desa.</p>
+		  <p>Petunjuk pengisian:</p>
+		  <ul>
+		  	<li>Kosongkan kolom jika tidak akan diubah</li>
+		  	<li>Isi nilai -1 jika akan dikembalikan ke nilai default</li>
+		  </ul>
 		</div>
 		<div class="col-md-12">
 			<div class="box box-primary">
@@ -35,6 +40,7 @@
 							<div class="col-sm-9">
 								<select class="form-control select3 input-sm" name="atasan">
 									<option value="">Pilih Atasan</option>
+									<option value="-1">-- Tidak ada atasan (keluarkan dari bagan) --</option>
 									<?php foreach ($atasan as $data): ?>
 										<option value="<?= $data['id']?>" <?php selected($pamong['atasan'], $data['id']); ?>><?= $data['nama']?> (<?= $data['jabatan']?>)</option>
 									<?php endforeach;?>
