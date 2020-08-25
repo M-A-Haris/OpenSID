@@ -245,7 +245,7 @@
 								<label class="control-label col-sm-4 bagan">Bagan - Warna</label>
 								<div class="col-sm-7">
 									<div class="input-group my-colorpicker2">
-										<input type="text" name="bagan_warna" class="form-control input-sm required" placeholder="#FFFFFF" value="<?=  $line['color']?>">
+										<input type="text" name="bagan_warna" class="form-control input-sm" placeholder="#FFFFFF" value="<?=  $pamong['bagan_warna']?>">
 										<div class="input-group-addon input-sm">
 											<i></i>
 										</div>
