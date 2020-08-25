@@ -265,9 +265,10 @@ class Shortcode_model extends CI_Model {
 	{
     $desa = $this->config_model->get_data();
 		$bagan = $this->pamong_model->list_bagan();
+		$ada_bpd = true;
 
 		ob_start();
-			include("donjo-app/views/home/bagan_w_bpd.php");
+			include("donjo-app/views/home/bagan_sisip.php");
 		$res = ob_get_clean();
 		return $res;
 	}
@@ -276,9 +277,10 @@ class Shortcode_model extends CI_Model {
 	{
     $desa = $this->config_model->get_data();
 		$bagan = $this->pamong_model->list_bagan();
+		$ada_bpd = false;
 
 		ob_start();
-			include("donjo-app/views/home/bagan_wo_bpd.php");
+			include("donjo-app/views/home/bagan_sisip.php");
 		$res = ob_get_clean();
 		return $res;
 	}

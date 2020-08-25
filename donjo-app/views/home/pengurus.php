@@ -47,7 +47,17 @@
 						</div>
 						<a href="<?= site_url("pengurus/dialog/cetak")?>" class="btn btn-social btn-flat bg-purple btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" title="Cetak Data" data-remote="false" data-toggle="modal" data-target="#modalBox" data-title="Cetak Data"><i class="fa fa-print "></i> Cetak</a>
 						<a href="<?= site_url("pengurus/dialog/unduh")?>" title="Unduh Data" class="btn btn-social btn-flat bg-navy btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" data-remote="false" data-toggle="modal" data-target="#modalBox" data-title="Unduh Data"><i class="fa fa-download"></i> Unduh</a>
-						<a href="<?= site_url("pengurus/bagan")?>" title="Bagan Organisasi" class="btn btn-social btn-flat bg-olive btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"><i class="fa fa-sitemap"></i> Bagan Organisasi</a>
+						<div class="btn-group btn-group-vertical">
+							<a class="btn btn-social btn-flat bg-olive btn-sm visible-xs-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" data-toggle="dropdown"><i class='fa fa-arrow-circle-down'></i> Bagan Organisasi</a>
+							<ul class="dropdown-menu" role="menu">
+								<li>
+									<a href="<?= site_url("pengurus/bagan")?>" title="Ubah Data" class="btn btn-social btn-flat btn-block btn-sm" ><i class="fa fa-sitemap"></i> Tanpa BPD</a>
+								</li>
+								<li>
+									<a href="<?= site_url("pengurus/bagan/bpd")?>" title="Ubah Data" class="btn btn-social btn-flat btn-block btn-sm" ><i class="fa fa-sitemap"></i> Dengan BPD</a>
+								</li>
+							</ul>
+						</div>
 					</div>
 					<div class="box-body">
 						<div class="row">

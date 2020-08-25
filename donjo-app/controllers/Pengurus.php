@@ -164,10 +164,11 @@ class Pengurus extends Admin_Controller {
 		$this->load->view('home/'.$aksi, $data);
 	}
 
-	public function bagan()
+	public function bagan($ada_bpd = '')
 	{
 		$data['desa'] = $this->config_model->get_data();
 		$data['bagan'] = $this->pamong_model->list_bagan();
+		$data['ada_bpd'] = ! empty($ada_bpd);
 		$this->load->view('header', $this->_header);
 		$this->load->view('nav');
 		$this->load->view('home/bagan', $data);
