@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="<?= base_url()?>assets/css/highcharts.css">
+
 
 <style type="text/css">
 /*@import 'https://code.highcharts.com/css/highcharts.css';*/
@@ -38,16 +38,16 @@
 }
 #container {
     min-width: 300px;
-    overflow: scroll !important;
+    
 }
 #container h4 {
     text-transform: none;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: normal;
 }
 #container p {
-    font-size: 13px;
-    line-height: 16px;
+    font-size: 10px;
+    line-height: 10px;
 }
 
 @media screen and (max-width: 600px) {
@@ -120,6 +120,7 @@ Highcharts.chart('container', {
         name: "<?= ucwords($this->setting->sebutan_desa.' '.$desa['nama_desa'])?>",
         keys: ['from', 'to'],
         data: [
+          ['BPD','LPM'],
    				<?php foreach ($bagan['struktur'] as $struktur): ?>
 						[<?= key($struktur) ?>,<?= current($struktur)?>],
 					<?php endforeach;?>
@@ -135,17 +136,45 @@ Highcharts.chart('container', {
             level: 1,
             color: 'MediumTurquoise',
             dataLabels: {
-                color: 'black'
+                color: 'white'
             },
             height: 25
         }, {
             level: 2,
-            color: '#980104'
+            color: '#980104',
+            dataLabels: {
+                color: 'white'
+            },
+            height: 25
         }, {
             level: 4,
-            color: '#359154'
+            color: '#359154',
+            dataLabels: {
+                color: 'white'
+            },
+            height: 25
         }],
+
+        linkColor: "#ccc",
+        linkLineWidth: 2,
+        linkRadius: 0,
+
         nodes: [
+          {
+              id: 'BPD',
+              color: 'gold',
+              column: 0,
+              offset: '-150'
+          },
+          {
+              id: 'LPM',
+              color: 'gold',
+              column: 0,
+              dataLabels: {
+                  color: 'black'
+              },
+              offset: '150'
+          },
         	<?php foreach ($bagan['nodes'] as $pamong) : ?>
         		{
         			id: <?= $pamong['pamong_id']?>,
@@ -174,8 +203,14 @@ Highcharts.chart('container', {
         dataLabels: {
             color: 'white'
         },
+        shadow: {
+          color: '#ccc',
+          width: 10,
+          offsetX: 0,
+          offsetY: 0
+        },
         borderColor: 'white',
-        nodeWidth: 65
+        nodeWidth: 75
     }],
     tooltip: {
         outside: true
@@ -189,4 +224,3 @@ Highcharts.chart('container', {
 });
 
 </script>
-
