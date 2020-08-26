@@ -36,7 +36,7 @@
 							<a class="btn btn-social btn-flat btn-info btn-sm" data-toggle="dropdown"><i class='fa fa-arrow-circle-down'></i> Aksi Data Terpilih</a>
 							<ul class="dropdown-menu" role="menu">
 								<li>
-									<a href="<?= site_url("pengurus/atur_bagan")?>" title="Ubah Data" data-remote="false" data-toggle="modal" data-target="#modal-bagan" data-title="Pengaturan Bagan" class="btn btn-social btn-flat btn-block btn-sm aksi-terpilih" ><i class="fa fa-sitemap"></i> Atur Bagan</a>
+									<a href="<?= site_url("pengurus/atur_bagan")?>" title="Ubah Data" data-remote="false" data-toggle="modal" data-target="#modalBox" data-title="Pengaturan Bagan" class="btn btn-social btn-flat btn-block btn-sm aksi-terpilih" ><i class="fa fa-sitemap"></i> Atur Bagan</a>
 								</li>
 								<?php if ($this->CI->cek_hak_akses('h')): ?>
 									<li>
@@ -186,39 +186,5 @@
 		</div>
 	</section>
 </div>
-<!-- Untuk menampilkan modal pengaturan bagan  -->
-<div class="modal fade" id="modal-bagan" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	<div class='modal-dialog'>
-		<div class='modal-content'>
-			<div class='modal-header'>
-				<button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-				<h4 class='modal-title' id='myModalLabel'> Pengaturan Bagan</h4>
-			</div>
-			<div class="fetched-data"></div>
-		</div>
-	</div>
-</div>
 
 <?php $this->load->view('global/confirm_delete');?>
-
-<script type="text/javascript">
-
-$('document').ready(function()
-{
-
-	$('#modal-bagan').on('show.bs.modal', function(e)
-	{
-		var link = $(e.relatedTarget);
-		var title = link.data('title');
-		var id = link.data('id');
-		var modal = $(this);
-		modal.find('.modal-title').text(title)
-		$(this).find('.fetched-data').load(link.attr('href'));
-		setTimeout(function() {
-			// tambahkan csrf token
-			addCsrfField(modal.find("form")[0]);
-		}, 500);
-	});
-
-});
-</script>
