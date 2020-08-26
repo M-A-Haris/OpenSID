@@ -200,7 +200,7 @@
 		$data['pamong_masajab'] = strip_tags($post['pamong_masajab']) ?: NULL;
 		$data['atasan'] = bilangan($post['atasan']) ?: NULL;
 		$data['bagan_tingkat'] = bilangan($post['bagan_tingkat']) ?: NULL;
-		$data['bagan_offset'] = bilangan($post['bagan_offset']) ?: NULL;
+		$data['bagan_offset'] = (integer)$post['bagan_offset'] ?: NULL;
 		$data['bagan_layout'] = htmlentities($post['bagan_layout']);
 		$data['bagan_warna'] = $post['bagan_warna'];
 		return $data;
